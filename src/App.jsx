@@ -31,7 +31,7 @@ const App = () => {
     <>
       <div className='w-full h-[100vh] flex flex-col items-center justify-center pb-[10rem] bg-[#141c2f] text-white'>
 
-        <form action="" className='w-[45%] h-[8rem]' onSubmit={handleSearch}>
+        <form action="" className='w-[90%] lg:w-[45%] h-[8rem]' onSubmit={handleSearch}>
           <h1 className='text-xl font-semibold mb-4'>github-user</h1>
           <div id='search-bar' className=' bg-[#1f2a48]  w-full h-[4rem] p-2 flex items-center justify-around rounded-lg'>
           <p className='h-[2rem] mt-2 bg-[#1f2a48] text-violet-800'> <i className="fa-solid fa-magnifying-glass" ></i> </p>
