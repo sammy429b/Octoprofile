@@ -4,24 +4,22 @@ import User from "../components/User";
 import GithubContext from "../../contexts/GithubContext";
 import Spinner from "../components/Spinner";
 import Card from "../components/Card";
+import { useNavigate } from "react-router-dom";
 const Statpage = () => {
+
     const info = useContext(GithubContext);
     const data = info.data;
     const { user, setUser, statuscode, loading, repo } = useContext(GithubContext);
-
-    console.log(repo)
+    const router = useNavigate();
     if(loading){
       return (<Spinner/>)
     }
 
-    // if(statuscode !== 200){
-    //   return (<h2>user not found</h2>)
-    // }
   return (
     <>
       <div
         id="container"
-        className="w-full h-[60vh] flex justify-center bg-[#1f2a48] "
+        className="w-full h-[26rem] flex justify-center bg-[#1f2a48] "
       >
         <div
           id="user-details"
@@ -85,8 +83,13 @@ const Statpage = () => {
           </div>
         </div>
       </div>
-      <div className="max-h-screen bg-slate-50">
-        <Card/>
+      <h3 className="text-2xl my-4 w-[92%] font-semibold mx-[4%] border-b-4 border-dashed py-1">Top repos</h3>
+      <div className="max-h-screen w-[95%] mx-[2.5%] mb-4 bg-slate-50 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {repo.map((item) => (
+          <a href={item.clone_url} target="_blank">
+          <Card repo={item}/>
+          </a>
+        ))}
       </div>
     </>
   );

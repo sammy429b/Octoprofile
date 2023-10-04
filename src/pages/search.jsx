@@ -17,6 +17,8 @@ const Search = () => {
   useEffect(() => {
     if (user !== '') {
       router('/user');
+    }else{
+      router("/")
     }
   }, [user]);
  
