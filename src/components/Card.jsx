@@ -9,7 +9,7 @@ const Card = ({repo}) => {
           <div className=" flex justify-between">
             <div className="w-[70%] flex justify-between">
 
-            <p className=""><i class="fa-solid fa-circle fa-xs"></i> {repo.language}</p>
+            <p className=""><i className="fa-solid fa-circle fa-xs"></i> {repo.language}</p>
             <p><i className="fa-regular fa-star"></i> {repo.stargazers_count}</p>
             <p><i className="fa-solid fa-code-fork"></i> {repo.forks_count}</p>
             </div>

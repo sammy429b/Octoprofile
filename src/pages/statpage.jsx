@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import moment from "moment";
 import User from "../components/User";
 import GithubContext from "../../contexts/GithubContext";
@@ -7,19 +7,18 @@ import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
 const Statpage = () => {
 
-    const info = useContext(GithubContext);
-    const data = info.data;
-    const { user, setUser, statuscode, loading, repo } = useContext(GithubContext);
+    const {user,data,repo, setUser, statuscode, loading } = useContext(GithubContext);
     const router = useNavigate();
+    
     if(loading){
       return (<Spinner/>)
     }
-
+    
   return (
     <>
       <div
         id="container"
-        className="w-full h-[26rem] flex justify-center bg-[#1f2a48] "
+        className="w-full h-[30rem] flex justify-center bg-[#1f2a48] "
       >
         <div
           id="user-details"
@@ -85,8 +84,9 @@ const Statpage = () => {
       </div>
       <h3 className="text-2xl my-4 w-[92%] font-semibold mx-[4%] border-b-4 border-dashed py-1">Top repos</h3>
       <div className="max-h-screen w-[95%] mx-[2.5%] mb-4 bg-slate-50 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {repo.map((item) => (
-          <a href={item.clone_url} target="_blank">
+        
+        {user!=="" && repo.map((item) => (
+          <a  key={item.id} href={item.clone_url} target="_blank">
           <Card repo={item}/>
           </a>
         ))}
