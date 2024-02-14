@@ -18,7 +18,7 @@ const Search = () => {
   // Redirect the user to the `/user` page after the `setUser()` state update has taken effect
   useEffect(() => {
     console.log(user)
-    if (user !== "") {
+    if (user !== "" && user!== null) {
       router('/user');
     }else{
       router("/")

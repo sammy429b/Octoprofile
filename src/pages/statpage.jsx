@@ -6,14 +6,16 @@ import Spinner from "../components/Spinner";
 import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
 const Statpage = () => {
+  const { user, data, repo, setUser, statuscode, loading } = useContext(GithubContext);
+  const router = useNavigate();
+  
 
-    const {user,data,repo, setUser, statuscode, loading } = useContext(GithubContext);
-    const router = useNavigate();
-    
-    if(loading){
-      return (<Spinner/>)
-    }
-    
+
+
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <div
@@ -25,20 +27,19 @@ const Statpage = () => {
           className="flex flex-col items-center bg-[#1f2a48] text-[#dce3e9] w-[100%] lg:w-[45%] h-[26rem] p-4 "
         >
           <div id="user-img" className="w-[9rem] rounded-[rem]  ">
-            
-              <img
-                src={data.avatar_url}
-                alt=""
-                className="w-[9rem] rounded-[6rem] object-cover border-8 border-violet-800"
-              />
+            <img
+              src={data.avatar_url}
+              alt=""
+              className="w-[9rem] rounded-[6rem] object-cover border-8 border-violet-800"
+            />
           </div>
           <div id="user-info" className="px-6 w-full mt-4">
             <div id="name" className="flex flex-col items-center gap-y-2">
               <p className="text-4xl ">{data.name}</p>
               <a href={`https://github.com/${data.login}`} target="_blank">
-              <p className="text-violet-800 text-2xl text-center">
-                @{data.login}
-              </p>
+                <p className="text-violet-800 text-2xl text-center">
+                  @{data.login}
+                </p>
               </a>
               <p className="text-md">
                 Joined {moment(data.created_at).format("l")}
@@ -82,14 +83,16 @@ const Statpage = () => {
           </div>
         </div>
       </div>
-      <h3 className="text-2xl my-4 w-[92%] font-semibold mx-[4%] border-b-4 border-dashed py-1">Top repos</h3>
+      <h3 className="text-2xl my-4 w-[92%] font-semibold mx-[4%] border-b-4 border-dashed py-1">
+        Top repos
+      </h3>
       <div className="max-h-screen w-[95%] mx-[2.5%] mb-4 bg-slate-50 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        
-        {user!=="" && repo.map((item) => (
-          <a  key={item.id} href={item.clone_url} target="_blank">
-          <Card repo={item}/>
-          </a>
-        ))}
+        {user !== "" &&
+          repo.map((item) => (
+            <a key={item.id} href={item.clone_url} target="_blank">
+              <Card repo={item} />
+            </a>
+          ))}
       </div>
     </>
   );

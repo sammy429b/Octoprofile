@@ -8,27 +8,28 @@ import Search from "./pages/search";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import GithubContextProvider from "../contexts/GithubContextProvider";
 import { useContext } from "react";
-import GithubContext from '../contexts/GithubContext';
+import GithubContext from "../contexts/GithubContext";
 
 const App = () => {
-  const {setUser} = useContext(GithubContext);
+  const { setUser } = useContext(GithubContext);
 
-  useEffect(()=>{
-    if(sessionStorage.getItem('name') !== ""){
-      setUser(sessionStorage.getItem('name'));
+  useEffect(() => {
+    if (sessionStorage.getItem("name") !== "") {
+      setUser(sessionStorage.getItem("name"));
+    }
+  }, []);
 
-    } 
-  },[])
-  
-  return (<>
+  return (
+    <>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Search />} />
           <Route path="/user" element={<Statpage />} />
         </Routes>
       </BrowserRouter>
-  </>
+    </>
   );
 };
 
 export default App;
+
