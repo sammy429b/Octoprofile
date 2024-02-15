@@ -10,21 +10,9 @@ const Search = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    setUser(name);
-    sessionStorage.setItem('name',name);
-    router('/user')
+    router('/' + name);
   };
 
-  // Redirect the user to the `/user` page after the `setUser()` state update has taken effect
-  useEffect(() => {
-    console.log(user)
-    if (user !== "" && user!== null) {
-      router('/user');
-    }else{
-      router("/")
-    }
-  }, [user]);
- 
 
   return (
     <>

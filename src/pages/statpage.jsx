@@ -4,11 +4,17 @@ import User from "../components/User";
 import GithubContext from "../../contexts/GithubContext";
 import Spinner from "../components/Spinner";
 import Card from "../components/Card";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const Statpage = () => {
   const { user, data, repo, setUser, statuscode, loading } = useContext(GithubContext);
   const router = useNavigate();
   
+  // use :user as a parameter
+  let {username} = useParams();
+
+  useEffect(() => {
+      setUser(username);
+  }, []);
 
 
 

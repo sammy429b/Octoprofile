@@ -14,7 +14,7 @@ const App = () => {
   const { setUser } = useContext(GithubContext);
 
   useEffect(() => {
-    if (sessionStorage.getItem("name") !== "") {
+    if (sessionStorage.getItem("name") !== "" && sessionStorage.getItem("name") !== null){
       setUser(sessionStorage.getItem("name"));
     }
   }, []);
@@ -24,7 +24,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Search />} />
-          <Route path="/user" element={<Statpage />} />
+          <Route path="/:username" element={<Statpage />} />
         </Routes>
       </BrowserRouter>
     </>
