@@ -23,7 +23,7 @@ const GithubContextProvider = ({ children }) => {
         setStatuscode(response.status);
         setData(data);
         setRepo(repos);
-        console.log(repos)
+        // console.log(repos)
       }
       setLoading(false);
     }

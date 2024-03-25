@@ -1,20 +1,82 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import User from "../components/User";
 import GithubContext from "../../contexts/GithubContext";
 import Spinner from "../components/Spinner";
 import Card from "../components/Card";
 import { useNavigate, useParams } from "react-router-dom";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 const Statpage = () => {
+
   const { user, data, repo, setUser, statuscode, loading } = useContext(GithubContext);
+  const [pieChartData, setPieChartData] = useState([]);
+  useEffect(() => {
+    //COUNT LANUAGE
+    let lang = {};
+    repo.map((item) => {
+      if (item.language in lang) {
+        if (item.language !== null) {
+          lang[item.language] += 1;
+        }
+      } else {
+        if (item.language !== null) {
+          lang[item.language] = 1;
+        }
+      }
+    });
+
+    let langArray = [];
+    for (let key in lang) {
+      langArray.push({
+        language: key,
+        size: lang[key],
+      });
+    }
+
+    langArray.sort((a, b) => b.size - a.size);
+    setPieChartData(langArray);
+  }, [repo]);
+
+  const datas = {
+    labels: pieChartData.map((item) => item.language),
+    datasets: [
+      {
+        label: 'langauge',
+        data: pieChartData.map((item) => item.size),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
   const router = useNavigate();
-  
+
   // use :user as a parameter
-  let {username} = useParams();
+  let { username } = useParams();
 
   useEffect(() => {
-      setUser(username);
+    setUser(username);
   }, []);
+
+
 
 
 
@@ -89,16 +151,26 @@ const Statpage = () => {
           </div>
         </div>
       </div>
-      <h3 className="text-2xl my-4 w-[92%] font-semibold mx-[4%] border-b-4 border-dashed py-1">
-        Top repos
-      </h3>
-      <div className="max-h-screen w-[95%] mx-[2.5%] mb-4 bg-slate-50 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {user !== "" &&
-          repo.map((item) => (
-            <a key={item.id} href={item.clone_url} target="_blank">
-              <Card repo={item} />
-            </a>
-          ))}
+
+      <div className="w-full  flex justify-center items-center">
+        <div className="w-1/4 bg-white shadow-2xl p-4 rounded" >
+          <Pie data={datas} className="w-[50%]" />;
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-2xl my-4 w-[92%] font-semibold mx-[4%] border-b-4 border-dashed py-1">
+          Top repos
+
+        </h3>
+        <div className="max-h-screen w-[95%] mx-[2.5%] mb-4 bg-slate-50 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {user !== "" &&
+            repo.map((item) => (
+              <a key={item.id} href={item.clone_url} target="_blank">
+                <Card repo={item} />
+              </a>
+            ))}
+        </div>
       </div>
     </>
   );
